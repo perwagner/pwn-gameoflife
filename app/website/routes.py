@@ -1,10 +1,12 @@
 import os
 
+from flask import render_template
+
+
 from . import website
 
 
 
 @website.route('/')
 def index():
-    print(os.getenv('SQLALCHEMY_DATABASE_URI', 'aaaa'))
-    return "HELLO WORLD"
+    return render_template("index.html", title="HOME", user="PER")

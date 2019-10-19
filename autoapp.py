@@ -3,6 +3,7 @@ import os
 
 import click
 from flask_migrate import Migrate
+from flask_socketio import SocketIO
 
 from app import create_app
 from app.models import db
@@ -12,6 +13,7 @@ logging.basicConfig(level=logging.INFO)
 app = create_app((os.getenv("ENV") or "local").lower())
 
 migrate = Migrate(app, db)
+socketio = SocketIO(app)
 
 
 @app.shell_context_processor
@@ -44,3 +46,16 @@ def test():
 
     pytest.main(['tests', '-v', '-l'])
 
+
+@socketio.on('message')
+def handle_message(message):
+    print("XXXXXXXXXXXXXXXXXX")
+    print('received message: ' + message)
+
+@socketio.on('my event')
+def handle_my_custom_event(json):
+    print(type(json))
+    print(f"Message is: {json['data']}")
+
+if __name__ == '__main__':
+    socketio.run(app, debug=True)

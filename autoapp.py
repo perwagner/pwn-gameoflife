@@ -2,19 +2,11 @@ import logging
 import os
 
 import click
-# from flask_migrate import Migrate
-# from flask_socketio import SocketIO
-
-# from app import create_app
 from app.models import db
 from app import app
 from app import socketio
 
 logging.basicConfig(level=logging.INFO)
-# app = create_app((os.getenv("ENV") or "local").lower())
-
-# migrate = Migrate(app, db)
-# socketio = SocketIO(app)
 
 
 @app.shell_context_processor

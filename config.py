@@ -4,6 +4,7 @@ import os
 class Config:
     ENV = os.environ.get('ENV')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT"
 
     @staticmethod
     def init_app(app):

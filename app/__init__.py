@@ -3,6 +3,7 @@ import logging
 from flask import Flask
 
 from app.api_v1 import api_v1 as api_v1_blueprint
+from app.website import website as website_blueprint
 from app.models import db
 from config import config
 
@@ -22,6 +23,7 @@ def create_app(env, additional_settings={}):
     db.init_app(app)
 
     # Blueprints
+    app.register_blueprint(website_blueprint, url_prefix='/')
     app.register_blueprint(api_v1_blueprint, url_prefix='/api/v1')
 
     return app

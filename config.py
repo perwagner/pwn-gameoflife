@@ -4,6 +4,7 @@ import os
 class Config:
     ENV = os.environ.get('ENV')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     @staticmethod
     def init_app(app):
         pass
@@ -11,7 +12,7 @@ class Config:
 
 class LocalConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_TEST', 'postgresql+psycopg2://tester:12345@db/flaskdb_test')
+    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_TEST', 'postgresql+psycopg2://tester:12345@localhost:5432/flaskdb')
 
 
 class DevConfig(Config):

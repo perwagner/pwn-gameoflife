@@ -1,6 +1,7 @@
 from flask_restplus import Resource
 
 from . import api
+from ..models import User
 
 
 class Status(Resource):
@@ -12,6 +13,10 @@ class Status(Resource):
 
 class DB(Resource):
     def get(self):
+        users = User.query.all()
+        print(users)
+
+
         return {
             "db": "Database here"
         }, 200

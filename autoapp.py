@@ -2,6 +2,7 @@ import logging
 import os
 
 import click
+from flask_migrate import Migrate
 
 from app import create_app
 from app.models import db
@@ -9,6 +10,8 @@ from app.models import db
 
 logging.basicConfig(level=logging.INFO)
 app = create_app((os.getenv("ENV") or "local").lower())
+
+migrate = Migrate(app, db)
 
 
 @app.shell_context_processor

@@ -15,7 +15,7 @@ services:
     environment:
       ENV: local
       SECRET_KEY: eEnbvGyk]Y8R/BgU
-      SQLALCHEMY_DATABASE_URI_TEST: 'postgresql+psycopg2://tester:12345@db/flaskdb_test'
+      SQLALCHEMY_DATABASE_URI_TEST: 'postgresql+psycopg2://tester:12345@db/flaskdb'
       FLASK_APP: autoapp.py
       FLASK_DEBUG: 1
 

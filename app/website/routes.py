@@ -11,7 +11,10 @@ from app.socket_connection.gameoflife.gamelogic import create_new_game
 
 @website.route('/')
 def index():
-    return render_template("index.html", title="HOME")
+    env = (os.getenv("ENV") or "local").lower()
+
+
+    return render_template("index.html", title="HOME", env=env)
 
 
 @website.route('/login', methods=['GET', 'POST'])

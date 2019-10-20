@@ -15,7 +15,6 @@ from app.models import db
 from config import config
 
 
-env = (os.getenv("ENV") or "local").lower()
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -39,6 +38,6 @@ def create_app(env="local", additional_settings={}, **kwargs):
 
     return app
 
-
-app = create_app()
+env = (os.getenv("ENV") or "local").lower()
+app = create_app(env)
 migrate = Migrate(app, db)

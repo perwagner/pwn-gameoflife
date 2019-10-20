@@ -1,9 +1,12 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 from app.app_setup import login_manager, db
 
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 class User(UserMixin, db.Model):
@@ -22,6 +25,22 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+class GameOfLifeGame(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    owner = db.relationship('User', backref=db.backref('user', lazy=True))
+
+    def __repr__(self):
+        return f"Game {self.id} by {self.owner.username}"
+
+
+class GameOfLifeCell(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    game_id = db.Column(db.Integer, db.ForeignKey('game_of_life_game.id'), nullable=False)
+    game = db.relationship('GameOfLifeGame', backref=db.backref('cells', lazy=True))
+    x = db.Column(db.Integer)
+    y = db.Column(db.Integer)
+    is_alive = db.Column(db.Boolean, default=False, nullable=False)
+
+    def __repr__(self):
+        return f"Game {self.game_id}: ({self.x},{self.y})"

@@ -19,6 +19,17 @@ services:
   #     FLASK_APP: autoapp.py
   #     FLASK_DEBUG: 1
 
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbit
+    image: rabbitmq:3.6.6-management
+    environment:
+        RABBITMQ_DEFAULT_USER: user
+        RABBITMQ_DEFAULT_PASS: user
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+
   db:
     image: postgres:alpine
     ports:

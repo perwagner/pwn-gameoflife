@@ -6,17 +6,13 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="{{ url_for('website.index') }}">Home <span class="sr-only">(current)</span></a>
-            
-            {% if current_user.is_authenticated %}            
-                <a class="nav-item nav-link" href="{{ url_for ('website.gameoflife') }}">Game of life</a>
-                <a class="nav-item nav-link" href="{{ url_for ('website.sockettest') }}">SocketTest</a>
-            {% else %}
-                <a class="nav-item nav-link disabled" href="#">Game of life</a>
-            {% endif %}
 
             {% if current_user.is_authenticated %}
+                <a class="nav-item nav-link" href="{{ url_for ('website.gameoflife') }}">Game of life</a>
+                <a class="nav-item nav-link" href="{{ url_for ('website.sockettest') }}">SocketTest</a>
                 <a class="nav-item nav-link" href="{{ url_for ('website.logout') }}">Logout</a>
             {% else %}
+                <a class="nav-item nav-link disabled" href="#">Game of life</a>
                 <a class="nav-item nav-link" href="{{ url_for ('website.login') }}">Login</a>
                 <a class="nav-item nav-link" href="{{ url_for ('website.signup') }}">Signup</a>
             {% endif %}

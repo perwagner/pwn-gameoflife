@@ -5,14 +5,26 @@
 {% block content %}
     <h1>Game Of Life</h1>
 
-{% endblock %}
+    <canvas id="GameCanvas" width="200" height="200"></canvas>
+    <hr />
 
+    <div>
+        <button 
+            class="btn btn-primary" 
+            onClick="clickButton()"
+            type="submit">Clicks: <span id="clicks">0</span>
+        </button>
+        <button 
+            class="btn btn-danger" 
+            onClick="restartGame()"
+            type="submit">Restart Game
+        </button>
+    </div>
+    
+{% endblock %}
 
 {% block js %}
     <script type="text/javascript" charset="utf-8">
-        var socket = io();
-        socket.on('connect', function() {
-            socket.emit('my event', {data: 'Game of life is ON baby'});
-        });
+        {% include 'gameoflife/gamelogic.js' %}
     </script>
 {% endblock %}

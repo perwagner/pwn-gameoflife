@@ -1,4 +1,6 @@
 # pwn-gameoflife
+Inspired by this competition: https://hackmd.io/@terminal1/assessment-conway
+
 
 # Heroku Setup
 You must set the following config variables:

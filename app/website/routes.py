@@ -1,7 +1,7 @@
 import os
 
 from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user, login_required
 
 from . import website
 from .forms import SignupForm, LoginForm
@@ -11,7 +11,7 @@ from app.models import User, db
 
 @website.route('/')
 def index():
-    return render_template("index.html", title="HOME", user="PER")
+    return render_template("index.html", title="HOME")
 
 
 @website.route('/login', methods=['GET', 'POST'])
@@ -19,8 +19,18 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        flash(f"login requested for user {form.username.data}, \
-        remember me={form.remember_me.data}")
+        user = User.query.filter_by(username=form.username.data).first()
+
+        if user is None:
+            flash('User does not exist, please create one')
+            return redirect(url_for('website.signup'))
+
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('website.login'))
+
+        login_user(user, remember=form.remember_me.data)
+        flash('Logged in successfully.')
 
         return redirect(url_for('website.index'))
     return render_template('login.html', title='Sign In', form=form)
@@ -29,7 +39,7 @@ def login():
 @website.route('/signup', methods=['GET', 'POST'])
 def signup():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('website.index'))
     
     form = SignupForm()
 
@@ -44,3 +54,16 @@ def signup():
 
         return redirect(url_for('website.login'))
     return render_template('signup.html', title='Signup', form=form)
+
+
+@website.route("/logout")
+@login_required
+def logout():
+    logout_user()
+
+    return redirect(url_for('website.index'))
+
+
+@website.route('/sockettest')
+def sockettest():
+    return render_template("sockettest.html")

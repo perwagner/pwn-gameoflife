@@ -67,3 +67,10 @@ def logout():
 @website.route('/sockettest')
 def sockettest():
     return render_template("sockettest.html")
+
+
+@website.route('/gameoflife')
+def gameoflife():
+    return render_template("gameoflife.html")
+
+

@@ -25,9 +25,9 @@ window.onload = function() {
     drawGrid(canvasContext, canvas.width, canvas.height);
 }
 
-window.setInterval(function(){
-    socket.emit('updateTurn', {data: "update the turn"});
-  }, 1000);
+// window.setInterval(function(){
+//     socket.emit('updateTurn', {data: "update the turn"});
+//   }, 1000);
 
 
 function drawGrid(context, canvasWidth, canvasHeight) {

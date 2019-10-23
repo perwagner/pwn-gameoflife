@@ -30,6 +30,28 @@ services:
         - "5672:5672"
         - "15672:15672"
 
+  # worker_1:
+  #   image: flask
+  #   build:
+  #     context: .
+  #     dockerfile: app.Dockerfile
+  #   hostname: worker_1
+  #   entrypoint: celery
+  #   command: worker -A autoapp.app --loglevel=info
+  #   volumes:
+  #     - ./:/usr/src/app
+  #   links:
+  #     - rabbitmq
+  #   depends_on:
+  #     - rabbitmq
+  #   environment:
+  #     ENV: local
+  #     SECRET_KEY: eEnbvGyk]Y8R/BgU
+  #     SQLALCHEMY_DATABASE_URI_TEST: 'postgresql+psycopg2://tester:12345@db/flaskdb'
+  #     FLASK_APP: autoapp.py
+  #     FLASK_DEBUG: 1      
+
+
   db:
     image: postgres:alpine
     ports:

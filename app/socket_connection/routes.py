@@ -22,7 +22,7 @@ def handle_cell_click(json):
     cell_y = json['cellY']
     print("CELL CLICKED")
     print(cell_x, cell_y)
-
+    add_together.delay(1,4)
 
 @socketio.on('updateTurn')
 def handle_update_turn(json):
@@ -45,4 +45,6 @@ def handle_restart_game():
     if game is not None:
         delete_game(game)  
 
+    print("A")
     add_together.delay(1,4)
+    print("B")

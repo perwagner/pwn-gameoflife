@@ -1,12 +1,24 @@
 import os
+from datetime import timedelta
+
+
+celery_beat_schedule = {
+        'run-every-1-second': {
+            'task': 'test',
+            'schedule': timedelta(seconds=1)
+        },
+    }
+
 
 
 class Config:
     ENV = os.environ.get('ENV')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT"
+
     CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', '')
     CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', '')
+    CELERYBEAT_SCHEDULE = celery_beat_schedule
 
     @staticmethod
     def init_app(app):

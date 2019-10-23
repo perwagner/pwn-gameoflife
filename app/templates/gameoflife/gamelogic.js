@@ -45,12 +45,22 @@ function drawGrid(context, canvasWidth, canvasHeight) {
     context.stroke()
 }
 
+
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+  }
+
+
 function clickCell(event) {
-    var x = event.x;
-    var y = event.y;
+    var mousePosition = getMousePos(canvas, event);
+    x = mousePosition.x;
+    y = mousePosition.y;
 
     var cell = getCellFromCoordinates(x, y);
-
     cellX = cell[0];
     cellY = cell[1];
 
@@ -60,11 +70,8 @@ function clickCell(event) {
 }
 
 function getCellFromCoordinates(x, y) {
-    var adaptedX = x - canvasPaddingX;
-    var adaptedY = y - canvasPaddingY;
-
-    cellX = Math.floor(adaptedX / cellSize) + 1;
-    cellY = Math.floor(adaptedY / cellSize) + 1;
+    cellX = Math.floor(x / cellSize) + 1;
+    cellY = Math.floor(y / cellSize) + 1;
 
     return [cellX, cellY];
 }

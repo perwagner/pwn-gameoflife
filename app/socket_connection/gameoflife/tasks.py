@@ -4,6 +4,7 @@ from flask_socketio import send, emit
 
 from app.app_setup import celery
 from app.models import db, GameOfLifeGame, GameOfLifeCell
+from app.socket_connection.gameoflife.gamelogic import update_game_round
 
 
 logger = logging.getLogger("TESTER")
@@ -14,7 +15,8 @@ def game_beat_1_second():
     games_exist = GameOfLifeGame.query.scalar()
     if not games_exist:
         return
-    logger.info("Update the game")
+        
+    update_game_round()
 
 
 @celery.task(name='cell_clicked')

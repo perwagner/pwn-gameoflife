@@ -4,7 +4,7 @@ from datetime import timedelta
 
 celery_beat_schedule = {
         'run-every-1-second': {
-            'task': 'test',
+            'task': 'game_beat_1_second',
             'schedule': timedelta(seconds=1)
         },
     }

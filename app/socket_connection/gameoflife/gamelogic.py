@@ -22,10 +22,15 @@ def create_new_game(owner, width, height):
 def delete_game(game):
     try:
         cells_to_delete = GameOfLifeCell.query.filter_by(game=game).all()
-        db.session.delete(cells_to_delete)
+        for cell in cells_to_delete:
+            db.session.delete(cell)
         db.session.delete(game)
         db.session.commit()
+        print("Game Was Deleted !!!")
     except Exception as E:
         print(E)
         db.session.rollback()
+
+
+    
 

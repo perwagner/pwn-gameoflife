@@ -1,15 +1,19 @@
 from flask_socketio import send, emit
 
 from . import socketio
-from app.models import GameOfLifeGame, db
-from app.socket_connection.gameoflife.gamelogic import delete_game
-from app.socket_connection.gameoflife.tasks import add_together
+from app.models import GameOfLifeGame, db, User, GameOfLifeCell
+from app.socket_connection.gameoflife.gamelogic import (
+    create_new_game,
+    delete_game,
+)
+from app.socket_connection.gameoflife.tasks import cell_clicked
 
 
 @socketio.on('message')
 def handle_message(message):
     print("XXXXXXXXXXXXXXXXXX")
     print('received message: ' + message)
+
 
 @socketio.on('connectionEstablished')
 def handle_connection_established(json):
@@ -20,22 +24,35 @@ def handle_connection_established(json):
 def handle_cell_click(json):
     cell_x = json['cellX']
     cell_y = json['cellY']
-    print("CELL CLICKED")
-    print(cell_x, cell_y)
-    add_together.delay(1,4)
+    cell = dict()
+    cell['x'] = cell_x
+    cell['y'] = cell_y
+
+    print(cell)
+    cell_clicked(cell)
+
 
 @socketio.on('updateTurn')
 def handle_update_turn(json):
-    print(f"Updating turn: {json['data']}")
+    games_exist = GameOfLifeGame.query.scalar()
+    if not games_exist:
+        if "user" in json:
+            user_id = json['user']
+            user = User.query.filter_by(id=user_id).first()
+            new_game = create_new_game(user, 10, 10)
+            print(f"New game created: {new_game}")
+    else:
+        print("Fetch updated game info")
+        game = GameOfLifeGame.query.first()
+        print(f"game stored: {game}")
+        cells = GameOfLifeCell.query.filter_by(game=game).all()
+        game_cells = list()
 
+        for cell in cells:
+            alive = 1 if cell.is_alive else 0
+            game_cells.append((cell.x, cell.y, alive))
 
-
-
-@socketio.on('clickButton')
-def handle_click_button(json):
-    print(json)
-
-    emit('updateClicks', 1)
+        emit('gameUpdate', game_cells, broadcast=True)
 
 
 @socketio.on('restartGame')
@@ -44,7 +61,4 @@ def handle_restart_game():
 
     if game is not None:
         delete_game(game)  
-
-    print("A")
-    add_together.delay(1,4)
-    print("B")
+      

@@ -18,12 +18,24 @@ heroku run -a <appname> flask db upgrade
 # Local setup
 Run this to initialize the database on docker:
 ```
+docker-compose up -d
 flask db upgrade
+heroku local
 ```
 
 
 ## Local celery worker
-Run this from local to start a worker
+Run this from local to start a worker locally in case you don't run `heroku local`
 ```
 celery worker -A app.celery --loglevel=info
+```
+
+And for BEAT
+```
+celery worker -A app.celery --loglevel=info --beat
+```
+
+And start the flask application:
+```
+python autoapp.py
 ```

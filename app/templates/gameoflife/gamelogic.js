@@ -1,23 +1,37 @@
-var socket = io();
-socket.on('connect', function() {
-    socket.emit('connectionEstablished', {data: 'Game of life connection established'});
-});
+BACKGROUND_COLOR = "#e0e0eb"
 
+var socket = io();
 var canvas, canvasContext;
 var mouseX, mouseY;
 var cellSize = 25;
-
 var canvasPaddingX = 50;
 var canvasPaddingY = 112;
 
 
+socket.on('connect', function() {
+    socket.emit('connectionEstablished', {data: 'Game of life connection established'});
+});
+
+
+socket.on('gameUpdate', function(msg) {
+    msg.forEach(function (item, index) {
+        x = item[0];
+        y = item[1];
+        alive = item[2];
+        if (alive == 1) {
+            colorCell(x, y, "#444444");
+        } else {
+            colorCell(x, y, BACKGROUND_COLOR);
+        }
+      });
+});
 
 
 window.onload = function() {
     canvas = document.getElementById("GameCanvas");
     canvasContext = canvas.getContext("2d");
 
-    canvasContext.fillStyle = "#e0e0eb ";
+    canvasContext.fillStyle = BACKGROUND_COLOR;
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
     canvas.addEventListener("mousedown", clickCell, false);
@@ -25,9 +39,9 @@ window.onload = function() {
     drawGrid(canvasContext, canvas.width, canvas.height);
 }
 
-// window.setInterval(function(){
-//     socket.emit('updateTurn', {data: "update the turn"});
-//   }, 1000);
+window.setInterval(function(){
+    socket.emit('updateTurn', {user: {{ current_user.id }} });
+  }, 1000);
 
 
 function drawGrid(context, canvasWidth, canvasHeight) {
@@ -90,7 +104,7 @@ function colorCell(cellX, cellY, color) {
     var y = cellCoordinates[1];
 
     canvasContext.fillStyle = color;
-    canvasContext.fillRect(x, y, cellSize, cellSize);
+    canvasContext.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
 }
 
 function restartGame() {

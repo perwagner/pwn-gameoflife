@@ -27,7 +27,10 @@ class Config:
 
 class LocalConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI_TEST', 'postgresql+psycopg2://tester:12345@localhost:5432/flaskdb')
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        'SQLALCHEMY_DATABASE_URI_TEST', 
+        'postgresql+psycopg2://tester:12345@localhost:5432/flaskdb'
+        )
 
     CELERY_BROKER_URL = "amqp://user:user@localhost:5672"
     CELERY_RESULT_BACKEND = "amqp://user:user@localhost:5672"

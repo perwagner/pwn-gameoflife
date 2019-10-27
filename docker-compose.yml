@@ -31,16 +31,28 @@ services:
         - "15672:15672"
 
   db:
+    container_name: db
     image: postgres:alpine
     ports:
       - 5432:5432
     volumes:
       - db-data:/var/lib/postgresql/data
-    restart: always
+    # restart: always
     environment:
       POSTGRES_PASSWORD: 12345
       POSTGRES_USER: tester
       POSTGRES_DB: flaskdb
+
+  test-db:
+    container_name: db_test
+    image: postgres:alpine
+    ports:
+      - 6666:5432
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: tester
+      POSTGRES_DB: flaskdb_test
+
 
 volumes:
   db-data:

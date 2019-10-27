@@ -2,11 +2,11 @@ from flask_socketio import send, emit
 
 from . import socketio
 from app.models import GameOfLifeGame, db, User, GameOfLifeCell
-from app.socket_connection.gameoflife.gamelogic import (
+from app.gameoflife.gamelogic import (
     create_new_game,
     delete_game,
 )
-from app.socket_connection.gameoflife.tasks import cell_clicked
+from app.gameoflife.tasks import cell_clicked
 
 
 @socketio.on('message')

@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from . import website
 from .forms import SignupForm, LoginForm
 from app.models import User, db, GameOfLifeGame
-from app.socket_connection.gameoflife.gamelogic import create_new_game
+from app.gameoflife.gamelogic import create_new_game
 
 
 @website.route('/')

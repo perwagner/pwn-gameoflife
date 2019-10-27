@@ -4,7 +4,7 @@ from flask_socketio import send, emit
 
 from app.app_setup import celery
 from app.models import db, GameOfLifeGame, GameOfLifeCell
-from app.socket_connection.gameoflife.gamelogic import update_game_round
+from app.gameoflife.gamelogic import update_game_round
 
 
 logger = logging.getLogger("TESTER")

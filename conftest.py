@@ -1,12 +1,14 @@
 import os
-
 import pytest
 
 from app import create_app
 from app.models import db as _db
 
 
-TEST_DATABASE_URI = os.getenv('TEST_DATABASE_URI', 'postgresql+psycopg2://tester:12345@db/flaskdb_test')
+TEST_DATABASE_URI = os.getenv(
+    'TEST_DATABASE_URI', 
+    'postgresql+psycopg2://tester:12345@localhost:6666/flaskdb_test'
+    )
 
 
 @pytest.fixture(scope='session')
@@ -43,7 +45,6 @@ def db(app, request):
     _db.drop_all()
 
 
-
 @pytest.fixture(scope='function')
 def session(db, request):
     """ Creates a new database session for a test """
@@ -59,6 +60,4 @@ def session(db, request):
     transaction.rollback()
     connection.close()
     session.remove()
-
-
-
+    

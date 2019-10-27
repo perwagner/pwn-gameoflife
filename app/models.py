@@ -41,6 +41,7 @@ class GameOfLifeCell(db.Model):
     x = db.Column(db.Integer)
     y = db.Column(db.Integer)
     is_alive = db.Column(db.Boolean, default=False, nullable=False)
+    color = db.Column(db.String(7), unique=False, nullable=True)
 
     def __repr__(self):
         return f"Game {self.game_id}: ({self.x},{self.y})"

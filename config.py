@@ -20,6 +20,10 @@ class Config:
     CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', '')
     CELERYBEAT_SCHEDULE = celery_beat_schedule
 
+    GAME_OF_LIFE_WIDTH = 32
+    GAME_OF_LIFE_HEIGHT = 24
+    GAME_OF_LIFE_DEAD_CELL_COLOR = "#444444"
+
     @staticmethod
     def init_app(app):
         pass

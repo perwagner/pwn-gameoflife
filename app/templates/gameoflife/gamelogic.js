@@ -6,10 +6,16 @@ var mouseX, mouseY;
 var cellSize = 25;
 var canvasPaddingX = 50;
 var canvasPaddingY = 112;
+var cellColor = "#444444";
 
 
 socket.on('connect', function() {
-    socket.emit('connectionEstablished', {data: 'Game of life connection established'});
+    socket.emit('connectionEstablished');
+});
+
+
+socket.on('getColor', function(color) {
+    cellColor = color;
 });
 
 
@@ -18,8 +24,10 @@ socket.on('gameUpdate', function(msg) {
         x = item[0];
         y = item[1];
         alive = item[2];
+        color = item[3];
+        
         if (alive == 1) {
-            colorCell(x, y, "#444444");
+            colorCell(x, y, color);
         } else {
             colorCell(x, y, BACKGROUND_COLOR);
         }
@@ -78,9 +86,9 @@ function clickCell(event) {
     cellX = cell[0];
     cellY = cell[1];
 
-    socket.emit('cellClick', {data: "", cellX: cellX, cellY, cellY});
+    socket.emit('cellClick', {color: cellColor, cellX: cellX, cellY, cellY});
 
-    colorCell(cellX, cellY, "#444444")
+    colorCell(cellX, cellY, cellColor);
 }
 
 function getCellFromCoordinates(x, y) {

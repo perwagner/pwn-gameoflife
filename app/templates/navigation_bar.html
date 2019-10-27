@@ -9,7 +9,6 @@
 
             {% if current_user.is_authenticated %}
                 <a class="nav-item nav-link" href="{{ url_for ('website.gameoflife') }}">Game of life</a>
-                <a class="nav-item nav-link" href="{{ url_for ('website.sockettest') }}">SocketTest</a>
                 <a class="nav-item nav-link" href="{{ url_for ('website.logout') }}">Logout</a>
             {% else %}
                 <a class="nav-item nav-link disabled" href="#">Game of life</a>

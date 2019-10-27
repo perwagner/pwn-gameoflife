@@ -67,11 +67,6 @@ def logout():
     return redirect(url_for('website.index'))
 
 
-@website.route('/sockettest')
-def sockettest():
-    return render_template("sockettest.html")
-
-
 @website.route('/gameoflife')
 def gameoflife():
     game = GameOfLifeGame.query.first()

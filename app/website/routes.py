@@ -68,6 +68,7 @@ def logout():
 
 
 @website.route('/gameoflife')
+@login_required
 def gameoflife():
     game = GameOfLifeGame.query.first()
     if game is None:

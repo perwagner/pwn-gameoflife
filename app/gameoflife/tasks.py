@@ -6,8 +6,8 @@ from app.models import db, GameOfLifeGame, GameOfLifeCell
 from app.gameoflife.gamelogic import update_game_round
 
 
-@celery.task(name='game_beat_1_second', ignore_result=True)
-def game_beat_1_second():
+@celery.task(name='game_turn', ignore_result=True)
+def game_turn():
     games_exist = GameOfLifeGame.query.scalar()
     if not games_exist:
         return

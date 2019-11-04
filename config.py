@@ -17,7 +17,7 @@ class Config:
     SECRET_KEY = "A0Zr98j/3yX R~XHH!jmN]LWX/,?RT"
 
     CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', '')
-    CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', '')
+    CELERY_RESULT_BACKEND = os.getenv('SQLALCHEMY_DATABASE_URI', '')
     CELERYBEAT_SCHEDULE = celery_beat_schedule
 
     GAME_OF_LIFE_WIDTH = 32
@@ -37,7 +37,7 @@ class LocalConfig(Config):
         )
 
     CELERY_BROKER_URL = "amqp://user:user@localhost:5672"
-    CELERY_RESULT_BACKEND = "amqp://user:user@localhost:5672"
+    CELERY_RESULT_BACKEND = "amqp://user:user@localhost:5672"  # "postgresql+psycopg2://tester:12345@localhost:5432/flaskdb"  # "amqp://user:user@localhost:5672"
 
 class DevConfig(Config):
     DEBUG = True

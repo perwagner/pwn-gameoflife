@@ -2,6 +2,7 @@ import logging
 import os
 
 import click
+
 from app.models import db
 from app import app
 from app import socketio

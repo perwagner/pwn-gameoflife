@@ -3,14 +3,14 @@ from datetime import timedelta
 
 
 celery_beat_schedule = {
-        # 'run-every-1-second': {
-        #     'task': 'game_beat_1_second',
-        #     'schedule': timedelta(seconds=1)
-        # },
-        'run-every-2-second': {
+        'run-every-1-second': {
             'task': 'game_turn',
-            'schedule': timedelta(seconds=2)
+            'schedule': timedelta(seconds=3)
         },
+        # 'run-every-2-second': {
+        #     'task': 'game_turn',
+        #     'schedule': timedelta(seconds=2)
+        # },
     }
 
 

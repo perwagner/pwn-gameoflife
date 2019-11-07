@@ -5,14 +5,14 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from . import website
 from .forms import SignupForm, LoginForm
-from app.models import User, db, GameOfLifeGame
-from app.gameoflife.gamelogic import create_new_game
+from application import socketio
+from application.models import User, db, GameOfLifeGame
+from application.gameoflife.gamelogic import create_new_game
 
 
 @website.route('/')
 def index():
     env = (os.getenv("ENV") or "local").lower()
-
 
     return render_template("index.html", title="HOME", env=env)
 

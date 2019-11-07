@@ -1,9 +1,12 @@
 from flask import current_app
 
-from app.models import GameOfLifeGame, GameOfLifeCell, db
+from application import socketio
+from application.models import GameOfLifeGame, GameOfLifeCell, db
 
 
 def create_new_game(owner, width, height):
+    game_cells = list()
+
     game = GameOfLifeGame(owner=owner)
     db.session.add(game)
     
@@ -17,9 +20,11 @@ def create_new_game(owner, width, height):
                 y=y + 1,
                 color=dead_cell_color,
             )
+            game_cells.append((cell.x, cell.y, False, dead_cell_color))
             db.session.add(cell)
     db.session.commit()
 
+    broadcast_game_state(game)
     return game
 
 
@@ -35,8 +40,22 @@ def delete_game(game):
         db.session.rollback()
 
 
+def broadcast_game_state(game=None):
+    if game is None:
+        game = GameOfLifeGame.query.first()
+
+    game_cells = list()
+    cells = GameOfLifeCell.query.filter_by(game=game).all()
+    for cell in cells:
+        alive = 1 if cell.is_alive else 0
+        game_cells.append((cell.x, cell.y, alive, cell.color))
+
+    socketio.emit("gameUpdate", game_cells) 
+
+
 def update_game_round():
     current_game_state = dict()
+    game_cells = list()
 
     games_exist = GameOfLifeGame.query.scalar()
     if not games_exist:
@@ -58,6 +77,12 @@ def update_game_round():
             cell.is_alive = alive_next_round
             cell.color = color
             db.session.commit()
+
+        alive = 1 if cell.is_alive else 0
+        game_cells.append((cell.x, cell.y, alive, cell.color))
+
+    socketio.emit("gameUpdate", game_cells)
+
 
 
 def _get_cell_state(cell, current_game_state):

@@ -47,10 +47,6 @@ window.onload = function() {
     drawGrid(canvasContext, canvas.width, canvas.height);
 }
 
-window.setInterval(function(){
-    socket.emit('updateTurn', {user: {{ current_user.id }} });
-  }, 1000);
-
 
 function drawGrid(context, canvasWidth, canvasHeight) {
     for (var x = 0; x <= canvasWidth; x += cellSize) {
@@ -115,6 +111,7 @@ function colorCell(cellX, cellY, color) {
     canvasContext.fillRect(x + 1, y + 1, cellSize - 2, cellSize - 2);
 }
 
-function restartGame() {
-    socket.emit('restartGame');
+function restartGame(user_id) {
+    var payload = {user_id: user_id};
+    socket.emit('restartGame', payload);
 }

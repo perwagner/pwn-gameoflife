@@ -1,9 +1,9 @@
 from flask_socketio import send, emit
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
-from app.app_setup import celery
-from app.models import db, GameOfLifeGame, GameOfLifeCell
-from app.gameoflife.gamelogic import update_game_round
+from application import celery
+from application.models import db, GameOfLifeGame, GameOfLifeCell
+from application.gameoflife.gamelogic import update_game_round
 
 
 @celery.task(name='game_turn', ignore_result=True)

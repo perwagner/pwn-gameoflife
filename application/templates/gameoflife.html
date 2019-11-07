@@ -11,7 +11,7 @@
     <div>
         <button 
             class="btn btn-danger" 
-            onClick="restartGame()"
+            onClick="restartGame({{ current_user.id }})"
             type="submit">Restart Game
         </button>
     </div>

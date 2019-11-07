@@ -27,15 +27,15 @@ heroku local
 ## Local celery worker
 Run this from local to start a worker locally in case you don't run `heroku local`
 ```
-celery worker -A app.celery --loglevel=info
+celery worker -A celery_worker.celery --loglevel=info
 ```
 
 And for BEAT
 ```
-celery worker -A app.celery --loglevel=info --beat
+celery worker -A celery_worker.celery --loglevel=info --beat
 ```
 
 And start the flask application:
 ```
-python autoapp.py
+flask run
 ```

@@ -34,7 +34,7 @@ def client(app):
     return app.test_client()
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='function')
 def db(app):
     """ Session-wide test database """
     _db.app = app
@@ -42,6 +42,7 @@ def db(app):
         _db.create_all()
 
     yield _db
+    
     _db.session.close()
     _db.drop_all()
  

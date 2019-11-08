@@ -1,5 +1,5 @@
 [run]
-omit = application/tests/*
+omit = **/tests/*
 
 [html]
 directory = coverage_html_report

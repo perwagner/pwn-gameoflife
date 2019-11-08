@@ -8,3 +8,5 @@ __pycache__/
 
 celerybeat-schedule*
 coverage_html_report/
+**/.mypy_cache/
+

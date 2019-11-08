@@ -1,4 +1,5 @@
 import os
+import logging
 
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,6 +10,9 @@ from application import socketio
 from application.models import User, db, GameOfLifeGame
 from application.gameoflife.gamelogic import create_new_game
 
+
+logging.basicConfig()
+logging.getLogger().setLevel(logging.DEBUG)
 
 @website.route('/')
 def index():
@@ -36,6 +40,7 @@ def login():
         flash('Logged in successfully.')
 
         return redirect(url_for('website.index'))
+
     return render_template('login.html', title='Sign In', form=form)
 
 

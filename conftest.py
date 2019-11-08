@@ -17,6 +17,8 @@ def app(request):
     """ Session wide test 'Flask' application """
     settings_override = {
         'TESTING': True,
+        'WTF_CSRF_ENABLED': False,
+
         'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI
     }
 
@@ -27,11 +29,6 @@ def app(request):
     yield app
 
     ctx.pop()
-
-
-@pytest.fixture
-def client(app):
-    return app.test_client()
 
 
 @pytest.fixture(scope='function')

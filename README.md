@@ -41,3 +41,10 @@ And start the flask application:
 ```
 flask run
 ```
+
+# Testing
+Run
+```
+pytest
+```
+Coverage report will be available in `/coverage_html_report/index.html`

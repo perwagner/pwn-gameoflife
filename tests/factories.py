@@ -2,15 +2,16 @@ import os
 
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
+import pytest
 
 from application.models import User
-from application import db as _db
+from application import db
 
 
 class BaseFactory(SQLAlchemyModelFactory):
     class Meta:
         abstract = True
-        sqlalchemy_session = _db.session
+        sqlalchemy_session = db.session
 
 
 class UserFactory(BaseFactory):

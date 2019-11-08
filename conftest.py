@@ -2,13 +2,14 @@ import os
 import pytest
 
 from application import create_app
-from application.models import db as _db
+from application import db as _db
 
 
 TEST_DATABASE_URI = os.getenv(
     'TEST_DATABASE_URI', 
     'postgresql+psycopg2://tester:12345@localhost:6666/flaskdb_test'
     )
+
 
 
 @pytest.fixture(scope='session')
@@ -34,30 +35,13 @@ def client(app):
 
 
 @pytest.fixture(scope='session')
-def db(app, request):
+def db(app):
     """ Session-wide test database """
-    _db.drop_all()
     _db.app = app
-    _db.create_all()
+    with app.app_context():
+        _db.create_all()
 
     yield _db
-
+    _db.session.close()
     _db.drop_all()
-
-
-@pytest.fixture(scope='function')
-def session(db, request):
-    """ Creates a new database session for a test """
-    connection = db.engine.connect()
-    transaction = connection.begin()
-
-    options = dict(bind=connection, binds={})
-    session = db.create_scoped_session(options=options)
-
-    db.session = session
-    yield db.session
-
-    transaction.rollback()
-    connection.close()
-    session.remove()
-    
+ 

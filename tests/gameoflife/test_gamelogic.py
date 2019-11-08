@@ -3,15 +3,12 @@ from application.gameoflife.gamelogic import (
     delete_game,
     update_game_round,
 )
-from application.models import GameOfLifeCell, GameOfLifeGame
+from application.models import GameOfLifeCell, GameOfLifeGame, User
 from tests.factories import UserFactory
 
 
-def test_status_return_value(session):
+def test_status_return_value(db):
     user = UserFactory()
-    print(user)
-
     game = create_new_game(user, 10, 10)
 
-    print(game)
-    assert False
+    assert isinstance(user, User)

@@ -3,8 +3,8 @@ import os
 import factory
 from factory.alchemy import SQLAlchemyModelFactory
 
-from app.models import User
-from app.models import db as _db
+from application.models import User
+from application import db as _db
 
 
 class BaseFactory(SQLAlchemyModelFactory):

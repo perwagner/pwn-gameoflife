@@ -1,4 +1,4 @@
-from app.models import User
+from application.models import User
 
 
 def test_user_model(session):

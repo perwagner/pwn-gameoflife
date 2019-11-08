@@ -10,14 +10,15 @@ from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import import_string
 
-# from application.models import db
 from config import config
+
 
 ENV = os.getenv("ENV", "local")
 login_manager = LoginManager()
 db = SQLAlchemy()
 celery = Celery(__name__, broker=config[ENV].CELERY_BROKER_URL)
 socketio = SocketIO()
+migrate = Migrate()
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.CRITICAL)
@@ -35,6 +36,7 @@ def create_app(env="local", additional_settings={}, **kwargs):
     login_manager.init_app(app)
     socketio.init_app(app, message_queue=config[env].CELERY_BROKER_URL, logger=logger)
     celery.conf.update(app.config)
+    migrate.init_app(app, db)
 
     with app.app_context():
         from application.api_v1 import api_v1 as api_v1_blueprint
@@ -46,7 +48,3 @@ def create_app(env="local", additional_settings={}, **kwargs):
         app.register_blueprint(gameoflife_blueprint)
 
         return app
-
-# env = (os.getenv("ENV") or "local").lower()
-# app = create_app(env)
-# migrate = Migrate(app, db)

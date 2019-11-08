@@ -3,24 +3,26 @@ Inspired by this competition: https://hackmd.io/@terminal1/assessment-conway
 
 
 # Heroku Setup
+**Currently Not Working**  
 You must set the following config variables:
 * SQLALCHEMY_DATABASE_URI
 * DEBUG
 * ENV = prod
-* FLASK_APP = autoapp.py
 
 From the heroku cli run the following to apply migrations:
 ```
 heroku run -a <appname> flask db upgrade
 ```
-
+Local running via heroku
+```
+heroku local
+```
 
 # Local setup
 Run this to initialize the database on docker:
 ```
 docker-compose up -d
 flask db upgrade
-heroku local
 ```
 
 

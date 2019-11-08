@@ -1,8 +1,8 @@
 import os
 import pytest
 
-from app import create_app
-from app.models import db as _db
+from application import create_app
+from application.models import db as _db
 
 
 TEST_DATABASE_URI = os.getenv(

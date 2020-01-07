@@ -8,6 +8,8 @@ from application.gameoflife.gamelogic import update_game_round
 
 @celery.task(name='game_turn', ignore_result=True)
 def game_turn():
+    logger.info("## GAME TURN ##")
+
     games_exist = GameOfLifeGame.query.scalar()
     if not games_exist:
         return
@@ -21,6 +23,8 @@ def game_turn():
 
 @celery.task(name='cell_clicked')
 def cell_clicked(cell_update):
+    logger.info("*** cell clicked ***")
+
     games_exist = GameOfLifeGame.query.scalar()
     if not games_exist:
         return

@@ -20,6 +20,8 @@ logging.basicConfig(level=logging.INFO)
 
 @socketio.on('connectionEstablished')
 def handle_connection_established():
+    logger.info("*** Handle connection established ***")
+
     color_rgb = [random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)]
     color_hex = '#%02x%02x%02x' % (color_rgb[0], color_rgb[1], color_rgb[2])
     emit('getColor', color_hex)
@@ -29,6 +31,8 @@ def handle_connection_established():
 
 @socketio.on('cellClick')
 def handle_cell_click(json):
+    logger.info("*** Handle cell click ***")
+
     cell = dict()
 
     color = json['color']
@@ -43,8 +47,9 @@ def handle_cell_click(json):
 
 @socketio.on('restartGame')
 def handle_restart_game(json):
+    logger.info("*** Handle restart game ***")
     game = GameOfLifeGame.query.first()
-
+    logger.info(game)
     if "user_id" not in json:
         logger.error("No user_id in json payload in handle_restart_game")
         return

@@ -20,6 +20,8 @@ socket.on('getColor', function(color) {
 
 
 socket.on('gameUpdate', function(msg) {
+    console.log("GameUpdate");
+    console.log(msg);
     msg.forEach(function (item, index) {
         x = item[0];
         y = item[1];

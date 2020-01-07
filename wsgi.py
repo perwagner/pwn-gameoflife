@@ -1,6 +1,9 @@
+import os
+
 from application import create_app, socketio
 
-app = create_app()
+ENV = os.getenv("ENV", "local")
+app = create_app(env=ENV)
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

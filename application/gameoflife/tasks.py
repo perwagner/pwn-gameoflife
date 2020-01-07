@@ -1,9 +1,15 @@
+import logging
+
 from flask_socketio import send, emit
 from sqlalchemy.orm.exc import ObjectDeletedError, StaleDataError
 
 from application import celery
 from application.models import db, GameOfLifeGame, GameOfLifeCell
 from application.gameoflife.gamelogic import update_game_round
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 @celery.task(name='game_turn', ignore_result=True)

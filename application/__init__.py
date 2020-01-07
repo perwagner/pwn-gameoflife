@@ -21,7 +21,7 @@ socketio = SocketIO()
 migrate = Migrate()
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 
 
 def create_app(env="local", additional_settings={}, **kwargs):

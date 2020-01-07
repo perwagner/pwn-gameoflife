@@ -7,12 +7,7 @@ celery_beat_schedule = {
             'task': 'game_turn',
             'schedule': timedelta(seconds=1)
         },
-        # 'run-every-2-second': {
-        #     'task': 'game_turn',
-        #     'schedule': timedelta(seconds=2)
-        # },
     }
-
 
 
 class Config:

@@ -26,7 +26,6 @@ logging.basicConfig(level=logging.INFO)
 
 def create_app(env="local", additional_settings={}, **kwargs):
     logger.info(f"Environment in __init__: {env}")
-    logger.info(f"env from env variable: {ENV}")
 
     app = Flask(__name__, instance_relative_config=True)
 

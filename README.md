@@ -13,10 +13,6 @@ From the heroku cli run the following to apply migrations:
 ```
 heroku run -a <appname> flask db upgrade
 ```
-Local running via heroku
-```
-heroku local
-```
 
 # Local setup
 Run this to initialize the database on docker:

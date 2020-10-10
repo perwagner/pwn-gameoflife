@@ -9,9 +9,7 @@ from application.tests.factories import UserFactory
 
 def test_status_return_value(db):
     users = User.query.all()
-    print(users)
     user = UserFactory()
-    print(user)
     game = create_new_game(user, 10, 10)
 
     assert isinstance(game, GameOfLifeGame)
